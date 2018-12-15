@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Aruberuto\Configurable\Http\Resources\ConfigResource;
 use Aruberuto\Configurable\Helpers\EloquentStructureHelper;
 
+/**
+ * Controller to make http request and obtain the configuration
+ */
 class ConfigurableController extends Controller {
 
     public function getConfig($entity, Request $request) {
