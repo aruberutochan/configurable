@@ -12,16 +12,24 @@ use Aruberuto\Configurable\Helpers\EloquentStructureHelper;
 class ConfigurableController extends Controller {
 
     public function getConfig($entity, Request $request) {
-        $config = config('entities.' . $entity, []);
-        // $config = EloquentStructureHelper::getConfigDefault('\Aruberuto\Blog\Entities\Post');
-        return new ConfigResource(collect($config));
+        $config = config('entities.' . $entity, null);
+        if($config) {
+            $status = 200;
+        } else {
+            $status = 400;
+        }
+        return (new ConfigResource(collect($config)))->response()->setStatusCode($status);
     }
 
     public function getStructure($entity, Request $request) {
-        $namespace = config('entities.' . $entity . '.entity.namespace', '' );
-        $class =  EloquentStructureHelper::getEntityClass($entity, $namespace);
-        $structure = EloquentStructureHelper::getStructure($class);
-        return new ConfigResource(collect($structure));
+        $class = config('entities.' . $entity . '.entity.class', '' );
+        $structure = $class ? EloquentStructureHelper::getStructure($class) : [];
+         if($structure) {
+            $status = 200;
+        } else {
+            $status = 400;
+        }
+        return (new ConfigResource(collect($structure)))->response()->setStatusCode($status);
     }
 
 }
