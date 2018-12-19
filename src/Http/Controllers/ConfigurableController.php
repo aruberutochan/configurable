@@ -12,8 +12,8 @@ use Aruberuto\Configurable\Helpers\EloquentStructureHelper;
 class ConfigurableController extends Controller {
 
     public function getConfig($entity, Request $request) {
-        // $config = config('entities.' . $entity, []);
-        $config = EloquentStructureHelper::getConfigDefault('\Aruberuto\Blog\Entities\Post');
+        $config = config('entities.' . $entity, []);
+        // $config = EloquentStructureHelper::getConfigDefault('\Aruberuto\Blog\Entities\Post');
         return new ConfigResource(collect($config));
     }
 
