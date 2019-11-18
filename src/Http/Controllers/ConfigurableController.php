@@ -12,7 +12,11 @@ use Aruberuto\Configurable\Helpers\EloquentStructureHelper;
 class ConfigurableController extends Controller {
 
     public function getConfig($entity, Request $request) {
-        $config = config('entities.' . $entity, null);
+        if ($entity === 'all') {
+            $config = config('entities', null);
+        } else {
+            $config = config('entities.' . $entity, null);
+        }
         if($config) {
             $status = 200;
         } else {
